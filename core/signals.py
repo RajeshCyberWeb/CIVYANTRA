@@ -4,7 +4,7 @@ from django.dispatch import receiver
 
 from core.models import Notification
 from operations.models import MaterialRequest, SiteProblemReport
-from projects.models import ProjectAssignment, Task, TaskDelayReport
+from projects.models import ProjectAssignment, Task, TaskDelayReport, TaskProgressHistory
 
 User = get_user_model()
 
@@ -12,7 +12,6 @@ User = get_user_model()
 def _notify(recipient, title, message, category="GENERAL", link_url="/"):
     if not recipient:
         return
-    # Avoid duplicate identical unread notifications
     if Notification.objects.filter(
         recipient=recipient, title=title, message=message, is_read=False
     ).exists():
@@ -54,10 +53,43 @@ def notify_worker_on_task_assigned(sender, instance, created, **kwargs):
         qty_info = f" ({instance.assigned_quantity} {instance.unit})" if instance.assigned_quantity else ""
         _notify(
             recipient=instance.assigned_to,
-            title=f"New Task Assigned: {instance.title}",
-            message=f"{assigner} assigned you '{instance.title}'{qty_info} on site {instance.project.name}.",
+            title=f"New Work Assigned: {instance.title}",
+            message=f"{assigner} gave you work '{instance.title}'{qty_info} on site {instance.project.name}.",
             category="TASK",
             link_url="/",
+        )
+
+
+@receiver(post_save, sender=TaskProgressHistory)
+def notify_admins_and_supervisor_on_work_done(sender, instance, created, **kwargs):
+    if not created:
+        return
+    worker = instance.submitted_by or instance.task.assigned_to
+    worker_name = (worker.get_full_name() or worker.username) if worker else "Worker"
+    task = instance.task
+    is_done = (
+        (instance.remarks and "Marked as Done" in instance.remarks)
+        or instance.quantity_submitted >= task.remaining_quantity
+    )
+    if is_done:
+        title = f"Work Completed by {worker_name}: {task.title}"
+        message = (
+            f"Worker {worker_name} completed '{task.title}' "
+            f"({instance.quantity_submitted} {task.unit}) on {task.project.name} ({task.project.project_code})."
+        )
+    else:
+        title = f"Work Submitted by {worker_name}: {task.title}"
+        message = (
+            f"Worker {worker_name} submitted progress ({instance.quantity_submitted} {task.unit}) "
+            f"for '{task.title}' on {task.project.name}."
+        )
+    for recipient in _get_admins_and_supervisor(task.project):
+        _notify(
+            recipient=recipient,
+            title=title,
+            message=message,
+            category="TASK",
+            link_url=f"/projects/tasks/{task.id}/",
         )
 
 

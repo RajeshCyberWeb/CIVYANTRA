@@ -113,18 +113,26 @@
               <span class="badge bg-light text-dark border">{{ item.task.get_priority_display }}</span>
             </td>
             <td>
-              <span class="badge {% if item.task.status == 'COMPLETED' %}<span class="badge bg-success mb-1"><i class="bi bi-patch-check-fill me-1"></i>Approved & Done ({{ request.user.username }})</span>bg-success{% elif item.task.status == 'DELAYED' %}bg-danger{% elif item.task.status == 'IN_PROGRESS' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+              <span class="badge {% if item.task.status == 'COMPLETED' %}bg-success{% elif item.task.status == 'DELAYED' %}bg-danger{% elif item.task.status == 'IN_PROGRESS' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
                 {{ item.task.get_status_display }}
               </span>
             </td>
             <td class="text-end">
               {% if item.task.status != 'COMPLETED' %}
-                <a href="{% url 'projects:submit_progress' item.task.id %}" class="btn btn-success btn-sm fw-bold px-3">
-                  <i class="bi bi-check-circle-fill me-1"></i>Submit / Mark Done
-                </a>
-                <a href="{% url 'projects:report_delay' item.task.id %}" class="btn btn-outline-danger btn-sm mt-1 mt-xl-0">
-                  Delay
-                </a>
+                <div class="d-inline-flex flex-wrap gap-1 justify-content-end">
+                  <a href="{% url 'projects:task_detail' item.task.id %}" class="btn btn-outline-primary btn-sm fw-bold">
+                    <i class="bi bi-pencil-square me-1"></i>Submit
+                  </a>
+                  <form method="post" action="{% url 'projects:mark_task_done' item.task.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success btn-sm fw-bold px-3">
+                      <i class="bi bi-check-circle-fill me-1"></i>Done
+                    </button>
+                  </form>
+                  <a href="{% url 'projects:report_delay' item.task.id %}" class="btn btn-outline-danger btn-sm">
+                    Delay
+                  </a>
+                </div>
               {% else %}
                 <span class="badge bg-success-subtle text-success border border-success px-3 py-2">Approved Done</span>
               {% endif %}

@@ -386,3 +386,18 @@ def acknowledge_delay(request, task_id, delay_id):
         messages.info(request, 'Delay report acknowledged.')
     return redirect('projects:task_detail', task_id=task.id)
 
+@login_required
+def mark_task_done(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    manageable = _can_manage_project(request.user, task.project)
+    is_assignee = request.user.role == User.Role.WORKER and task.assigned_to_id == request.user.id
+    if not (manageable or is_assignee):
+        raise PermissionDenied('You cannot complete this task.')
+    if request.method == 'POST':
+        remaining = task.remaining_quantity if getattr(task, 'remaining_quantity', 0) > 0 else task.assigned_quantity
+        try:
+            submit_task_progress(task=task, submitted_by=request.user, work_date=timezone.localdate(), quantity_submitted=remaining, remarks='Marked as Done by worker')
+            messages.success(request, f'Work {task.title} marked as Done! Notification sent to Supervisor and Admin.')
+        except ValidationError as exc:
+            messages.error(request, exc.message)
+    return redirect(request.META.get('HTTP_REFERER') or 'core:dashboard')
