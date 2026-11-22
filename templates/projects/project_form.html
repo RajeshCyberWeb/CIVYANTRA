@@ -1,0 +1,23 @@
+﻿{% extends 'base.html' %}
+{% block title %}{% if is_edit %}Edit Project{% else %}New Project{% endif %} | CIVYANTRA{% endblock %}
+{% block page_heading %}{% if is_edit %}Edit Project: {{ project.project_code }}{% else %}Create New Construction Project{% endif %}{% endblock %}
+{% block content %}
+<div class="card mcm-card p-4" style="max-width: 760px;">
+  {% if not is_edit %}<div class="alert alert-info small"><i class="bi bi-info-circle me-1"></i>A unique Project Code (e.g., <strong>PRJ-001</strong>) will be generated automatically upon saving.</div>{% endif %}
+  <form method="post">{% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label fw-semibold">Project Name</label>{{ form.name }}{% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Site Location</label>{{ form.location }}{% if form.location.errors %}<div class="text-danger small">{{ form.location.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Assigned Site Supervisor</label>{{ form.supervisor }}{% if form.supervisor.errors %}<div class="text-danger small">{{ form.supervisor.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Project Status</label>{{ form.status }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Start Date</label>{{ form.start_date }}{% if form.start_date.errors %}<div class="text-danger small">{{ form.start_date.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Expected End Date</label>{{ form.expected_end_date }}{% if form.expected_end_date.errors %}<div class="text-danger small">{{ form.expected_end_date.errors.0 }}</div>{% endif %}</div>
+      <div class="col-12"><label class="form-label fw-semibold d-block">Weekly Working Days</label>{% for cb in form.working_days %}<div class="form-check form-check-inline">{{ cb.tag }} <label class="form-check-label" for="{{ cb.id_for_label }}">{{ cb.choice_label }}</label></div>{% endfor %}{% if form.working_days.errors %}<div class="text-danger small">{{ form.working_days.errors.0 }}</div>{% endif %}</div>
+      <div class="col-12"><label class="form-label fw-semibold">Site Description & Scope</label>{{ form.description }}</div>
+    </div>
+    <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-warning fw-bold px-4">{% if is_edit %}Save Project Changes{% else %}Create Project{% endif %}</button><a href="{% url 'projects:project_list' %}" class="btn btn-outline-secondary">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}
+

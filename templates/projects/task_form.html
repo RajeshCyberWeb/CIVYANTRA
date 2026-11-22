@@ -1,0 +1,21 @@
+﻿{% extends 'base.html' %}
+{% block title %}Assign Task | CIVYANTRA{% endblock %}
+{% block page_heading %}Assign New Task on {{ project.project_code }} ({{ project.name }}){% endblock %}
+{% block content %}
+<div class="card mcm-card p-4" style="max-width: 760px;">
+  <form method="post">{% csrf_token %}
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label fw-semibold">Assign to Active Worker</label>{{ form.assigned_to }}{% if form.assigned_to.errors %}<div class="text-danger small">{{ form.assigned_to.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Task Title</label>{{ form.title }}{% if form.title.errors %}<div class="text-danger small">{{ form.title.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-4"><label class="form-label fw-semibold">Trade / Category</label>{{ form.category }}</div>
+      <div class="col-md-4"><label class="form-label fw-semibold">Measurement Unit</label>{{ form.unit }}</div>
+      <div class="col-md-4"><label class="form-label fw-semibold">Target Quantity</label>{{ form.assigned_quantity }}{% if form.assigned_quantity.errors %}<div class="text-danger small">{{ form.assigned_quantity.errors.0 }}</div>{% endif %}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Priority</label>{{ form.priority }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Deadline (Optional)</label>{{ form.deadline }}</div>
+      <div class="col-12"><label class="form-label fw-semibold">Instructions & Quality Notes</label>{{ form.description }}</div>
+    </div>
+    <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-warning fw-bold px-4">Assign Task</button><a href="{% url 'projects:project_detail' project.id %}" class="btn btn-outline-secondary">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}
+

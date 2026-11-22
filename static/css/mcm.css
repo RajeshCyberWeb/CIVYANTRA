@@ -1,0 +1,7 @@
+:root { --mcm-navy: #0f172a; --mcm-slate: #1e293b; --mcm-amber: #f59e0b; --mcm-bg: #f8fafc; }
+body { background-color: var(--mcm-bg); font-family: system-ui, -apple-system, sans-serif; }
+.mcm-sidebar { min-height: 100vh; background-color: var(--mcm-navy); color: #e2e8f0; }
+.mcm-sidebar .nav-link { color: #cbd5e1; border-radius: 0.5rem; padding: 0.65rem 1rem; margin-bottom: 0.25rem; font-weight: 500; }
+.mcm-sidebar .nav-link:hover, .mcm-sidebar .nav-link.active { background-color: var(--mcm-slate); color: var(--mcm-amber); }
+.mcm-brand { color: #ffffff; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid #334155; }
+.mcm-card { border: none; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }

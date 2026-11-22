@@ -1,0 +1,13 @@
+﻿{% extends 'base.html' %}
+{% block title %}Reset Worker PIN | CIVYANTRA{% endblock %}
+{% block page_heading %}Reset Smart Tab PIN: {{ worker_profile.worker_code }}{% endblock %}
+{% block content %}
+<div class="card mcm-card p-4" style="max-width: 480px;">
+  <p class="text-muted small">Setting a new 4-digit PIN for <strong>{{ target_user.get_display_name }} ({{ worker_profile.worker_code }})</strong> will also clear any Smart Tab PIN lockout.</p>
+  <form method="post">{% csrf_token %}
+    {% for field in form %}<div class="mb-3"><label class="form-label fw-semibold">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="text-danger small mt-1">{{ field.errors.0 }}</div>{% endif %}</div>{% endfor %}
+    <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-warning fw-bold px-4">Reset PIN</button><a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}
+

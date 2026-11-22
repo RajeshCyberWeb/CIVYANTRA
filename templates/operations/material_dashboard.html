@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% block title %}Materials & Stock | CIVYANTRA{% endblock %}
+{% block page_heading %}Materials & Site Stock Management{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h3 class="fw-bold mb-0"><i class="bi bi-box-seam text-primary me-2"></i>Materials & Site Inventory</h3>
+    <small class="text-muted">
+      {% if user.role == 'ADMIN' %}
+        Admin Oversight: Review material complaints from Workers & Supervisors, track orders, and manage the material catalog.
+      {% elif user.role == 'SUPERVISOR' %}
+        Supervisor Portal: Report missing/finished materials, review worker requests, and track site stock orders.
+      {% else %}
+        Worker Portal: Report missing, finished, or damaged site materials directly to your Supervisor & Admin.
+      {% endif %}
+    </small>
+  </div>
+</div>
+
+{% if user.role != 'ADMIN' %}
+<div class="row g-4 mb-4">
+  <div class="{% if user.role == 'SUPERVISOR' %}col-lg-7{% else %}col-12{% endif %}">
+    <div class="card shadow-sm border-0 rounded-4 h-100">
+      <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold">
+        <i class="bi bi-exclamation-circle text-warning me-2"></i>Report Material Issue / Request Stock
+      </div>
+      <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="request_material">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Project Site</label>
+            {{ req_form.project }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Material</label>
+            {{ req_form.material }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Problem / Issue Type</label>
+            {{ req_form.problem_type }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Required Qty</label>
+            {{ req_form.required_quantity }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Site Photo (Optional)</label>
+            {{ req_form.photo }}
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold">Reason / Site Notes</label>
+            {{ req_form.description }}
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary fw-semibold"><i class="bi bi-send me-1"></i>Send Report to Supervisor & Admin</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% if user.role == 'SUPERVISOR' %}
+  <div class="col-lg-5">
+    <div class="card shadow-sm border-0 rounded-4 h-100">
+      <div class="card-header bg-white py-3 px-4 fw-semibold border-bottom">
+        <i class="bi bi-plus-circle text-primary me-2"></i>Add New Material to Catalog
+      </div>
+      <div class="card-body p-4">
+        <form method="post" class="row g-3">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="add_material">
+          <div class="col-12">
+            <label class="form-label fw-semibold">Material Name</label>
+            {{ mat_form.name }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Category</label>
+            {{ mat_form.category }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Unit</label>
+            {{ mat_form.unit }}
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold">Description</label>
+            {{ mat_form.description }}
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-outline-primary w-100 fw-semibold"><i class="bi bi-plus-circle me-1"></i>Add Material</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold">
+    <i class="bi bi-plus-circle text-warning me-2"></i>Add New Material to Master Catalog
+  </div>
+  <div class="card-body p-4">
+    <form method="post" class="row g-3 align-items-end">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="add_material">
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Material Name</label>
+        {{ mat_form.name }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Category</label>
+        {{ mat_form.category }}
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Unit</label>
+        {{ mat_form.unit }}
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Description</label>
+        {{ mat_form.description }}
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100 fw-semibold"><i class="bi bi-plus-circle me-1"></i>Add Material</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-clipboard-check text-warning me-2"></i>Material Complaints, Orders & Approvals</span>
+    <span class="badge bg-warning text-dark">Worker & Supervisor Reports</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Code</th>
+          <th>Project</th>
+          <th>Material</th>
+          <th>Qty</th>
+          <th>Issue Type</th>
+          <th>Reported By</th>
+          <th>Approval & Shopping Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for req in material_requests %}
+        <tr>
+          <td class="fw-bold">{{ req.request_code }}</td>
+          <td>{{ req.project.project_code }}</td>
+          <td>
+            <div class="fw-semibold">{{ req.material.name }}</div>
+            <small class="text-muted">{{ req.description|truncatewords:8 }}</small>
+          </td>
+          <td class="fw-semibold">{{ req.required_quantity }} {{ req.material.unit }}</td>
+          <td><span class="badge bg-danger-subtle text-danger border border-danger">{{ req.get_problem_type_display }}</span></td>
+          <td>
+            <div class="fw-semibold">{{ req.requested_by.get_display_name }}</div>
+            <span class="badge {% if req.requested_by.role == 'SUPERVISOR' %}bg-primary{% else %}bg-success{% endif %}">{{ req.requested_by.get_role_display }}</span>
+          </td>
+          <td>
+            <span class="badge {% if req.approval_status == 'APPROVED' %}bg-success{% elif req.approval_status == 'REJECTED' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+              {{ req.get_approval_status_display }}
+            </span>
+            <small class="text-muted d-block">{{ req.get_order_status_display }}</small>
+          </td>
+          <td>
+            {% if user.role != 'WORKER' and req.approval_status != 'REJECTED' and req.order_status != 'DELIVERED' %}
+            <form method="post" action="{% url 'operations:review_material_request' req.pk %}" class="d-flex flex-wrap gap-1">
+              {% csrf_token %}
+              {% if req.order_status == 'NOT_ORDERED' %}
+                <button name="decision" value="ORDER" class="btn btn-sm btn-outline-primary">Mark Ordered</button>
+              {% endif %}
+              <button name="decision" value="APPROVE" class="btn btn-sm btn-success">Deliver & Stock</button>
+              {% if req.approval_status == 'PENDING' %}
+                <button name="decision" value="REJECT" class="btn btn-sm btn-outline-danger">Reject</button>
+              {% endif %}
+            </form>
+            {% else %}
+            <span class="text-muted small">{{ req.get_order_status_display }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">No material issues or requests reported yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold">
+    <i class="bi bi-boxes text-warning me-2"></i>Live Project Stock Inventory (Available vs Missing)
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Project</th>
+          <th>Material</th>
+          <th>Available Stock</th>
+          <th>Reorder Level</th>
+          <th>Stock Status</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in inventories %}
+        <tr>
+          <td class="fw-semibold">{{ item.project.project_code }} - {{ item.project.name }}</td>
+          <td>{{ item.material.name }}</td>
+          <td class="fw-bold">{{ item.available_quantity }} {{ item.material.unit }}</td>
+          <td>{{ item.reorder_level }} {{ item.material.unit }}</td>
+          <td>
+            {% if item.available_quantity <= item.reorder_level %}
+              <span class="badge bg-danger">Low / Missing</span>
+            {% else %}
+              <span class="badge bg-success">In Stock</span>
+            {% endif %}
+          </td>
+          <td>{{ item.updated_at|date:"d M Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center text-muted py-4">No stock items recorded yet. Deliver a material request to update site stock.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

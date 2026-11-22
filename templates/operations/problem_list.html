@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Site Problem Reports | CIVYANTRA{% endblock %}
+{% block page_heading %}Site Problem & Safety Reports{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h3 class="fw-bold mb-0"><i class="bi bi-exclamation-triangle text-warning me-2"></i>Site Problem & Safety Reports</h3>
+    <small class="text-muted">
+      {% if user.role == 'ADMIN' %}
+        Admin Oversight: Monitor all site problems reported by Workers and Supervisors and verify resolutions.
+      {% elif user.role == 'SUPERVISOR' %}
+        Supervisor Portal: Report site problems to Admin or resolve issues reported by your site workers.
+      {% else %}
+        Worker Portal: Report any site safety hazard, equipment failure, or work blocker to your Supervisor & Admin.
+      {% endif %}
+    </small>
+  </div>
+</div>
+
+{% if user.role != 'ADMIN' %}
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold">
+    <i class="bi bi-flag-fill text-warning me-2"></i>Report a Site Problem
+  </div>
+  <div class="card-body p-4">
+    <form method="post" enctype="multipart/form-data" class="row g-3">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Project Site</label>
+        {{ form.project }}
+      </div>
+      <div class="col-md-5">
+        <label class="form-label fw-semibold">Problem Title</label>
+        {{ form.title }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Severity</label>
+        {{ form.severity }}
+      </div>
+      <div class="col-md-8">
+        <label class="form-label fw-semibold">Description</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Evidence Photo (Optional)</label>
+        {{ form.photo }}
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-warning fw-bold"><i class="bi bi-flag me-1"></i>Send Site Problem Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="card shadow-sm border-0 rounded-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 fw-semibold d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-list-ul text-warning me-2"></i>Reported Site Issues</span>
+    <span class="badge bg-danger">Live Site Monitoring</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Code</th>
+          <th>Project</th>
+          <th>Title & Details</th>
+          <th>Severity</th>
+          <th>Reported By</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prob in problems %}
+        <tr>
+          <td class="fw-bold">{{ prob.problem_code }}</td>
+          <td>{{ prob.project.project_code }}</td>
+          <td>
+            <div class="fw-semibold">{{ prob.title }}</div>
+            <small class="text-muted">{{ prob.description|truncatechars:80 }}</small>
+          </td>
+          <td>
+            <span class="badge {% if prob.severity == 'CRITICAL' or prob.severity == 'HIGH' %}bg-danger{% elif prob.severity == 'MEDIUM' %}bg-warning text-dark{% else %}bg-info text-dark{% endif %}">
+              {{ prob.get_severity_display }}
+            </span>
+          </td>
+          <td>
+            <div class="fw-semibold">{{ prob.reported_by.get_display_name }}</div>
+            <span class="badge {% if prob.reported_by.role == 'SUPERVISOR' %}bg-primary{% else %}bg-success{% endif %}">{{ prob.reported_by.get_role_display }}</span>
+          </td>
+          <td>
+            <span class="badge {% if prob.status == 'RESOLVED' %}bg-success{% else %}bg-danger{% endif %}">
+              {{ prob.get_status_display }}
+            </span>
+          </td>
+          <td>
+            {% if prob.status != 'RESOLVED' and user.role != 'WORKER' %}
+            <form method="post" action="{% url 'operations:resolve_problem' prob.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-success fw-semibold">Mark Resolved</button>
+            </form>
+            {% else %}
+            <span class="text-muted small">{% if prob.resolved_at %}Resolved by {{ prob.resolved_by.get_display_name }}{% else %}Waiting for Supervisor/Admin{% endif %}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No site issues reported yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

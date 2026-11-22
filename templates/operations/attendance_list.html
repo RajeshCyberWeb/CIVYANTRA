@@ -1,0 +1,86 @@
+﻿{% extends 'base.html' %}
+{% block title %}Site Attendance | CIVYANTRA{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h3 class="fw-bold mb-0"><i class="bi bi-person-check text-primary me-2"></i>Daily Site Attendance</h3>
+    <small class="text-muted">Date: {{ today }}</small>
+  </div>
+</div>
+
+{% if user.role != 'WORKER' %}
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-white fw-semibold">Record Worker Check-In</div>
+  <div class="card-body">
+    <form method="post" class="row g-3 align-items-end">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <label class="form-label">Project Site</label>
+        {{ form.project }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Worker</label>
+        {{ form.worker }}
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Verification</label>
+        {{ form.verification_method }}
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-box-arrow-in-right me-1"></i>Check In</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white fw-semibold">Attendance Log</div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>Project</th>
+          <th>Worker</th>
+          <th>Method</th>
+          <th>Check-In</th>
+          <th>Check-Out</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in records %}
+        <tr>
+          <td>{{ rec.attendance_date }}</td>
+          <td><span class="badge bg-dark">{{ rec.project.project_code }}</span> {{ rec.project.name }}</td>
+          <td>{{ rec.worker.get_full_name|default:rec.worker.username }}</td>
+          <td>{{ rec.get_verification_method_display }}</td>
+          <td>{{ rec.check_in_time|time:"H:i" }}</td>
+          <td>{% if rec.check_out_time %}{{ rec.check_out_time|time:"H:i" }}{% else %}-{% endif %}</td>
+          <td>
+            <span class="badge {% if rec.status == 'PRESENT' %}bg-success{% elif rec.status == 'HALF_DAY' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+              {{ rec.get_status_display }}
+            </span>
+          </td>
+          <td>
+            {% if not rec.check_out_time and user.role != 'WORKER' %}
+            <form method="post" action="{% url 'operations:attendance_checkout' rec.pk %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-outline-danger">Check Out</button>
+            </form>
+            {% else %}
+            <span class="text-muted small">Completed</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">No attendance records found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

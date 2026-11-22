@@ -1,0 +1,15 @@
+﻿{% extends 'base.html' %}
+{% block title %}Add Supervisor | CIVYANTRA{% endblock %}
+{% block page_heading %}Register New Site Supervisor{% endblock %}
+{% block content %}
+<div class="card mcm-card p-4" style="max-width: 680px;">
+  <div class="alert alert-info small"><i class="bi bi-info-circle me-1"></i>A unique Supervisor ID (e.g., <strong>SUP-001</strong>) will be generated automatically upon saving.</div>
+  <form method="post">{% csrf_token %}
+    <div class="row g-3">
+      {% for field in form %}<div class="col-md-6"><label class="form-label fw-semibold">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="text-danger small mt-1">{{ field.errors.0 }}</div>{% endif %}</div>{% endfor %}
+    </div>
+    <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-primary fw-bold px-4">Create Supervisor</button><a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}
+

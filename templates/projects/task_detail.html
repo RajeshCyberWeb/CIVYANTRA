@@ -1,0 +1,89 @@
+﻿{% extends 'base.html' %}
+{% block title %}{{ task.title }} | CIVYANTRA{% endblock %}
+{% block page_heading %}Task Verification: {{ task.title }}{% endblock %}
+{% block content %}
+<div class="card mcm-card p-4 mb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+    <div>
+      <span class="badge bg-dark text-warning font-monospace">{{ task.project.project_code }}</span>
+      <span class="badge {% if task.status == 'COMPLETED' %}bg-success{% elif task.status == 'DELAYED' %}bg-danger{% elif task.status == 'IN_PROGRESS' %}bg-primary{% else %}bg-secondary{% endif %} ms-1">{{ task.get_status_display }}</span>
+      <span class="badge bg-light text-dark border ms-1">Priority: {{ task.get_priority_display }}</span>
+      <h4 class="fw-bold mt-2 mb-1">{{ task.title }}</h4>
+      <p class="text-muted small mb-2"><strong>Worker:</strong> {{ task.assigned_to.get_display_name }} | <strong>Category:</strong> {{ task.category|default:'General' }} | <strong>Deadline:</strong> {{ task.deadline|default:'Not set' }}</p>
+      {% if task.description %}<p class="small mb-0">{{ task.description }}</p>{% endif %}
+    </div>
+    <a href="{% url 'projects:project_detail' task.project.id %}" class="btn btn-outline-secondary btn-sm">Back to {{ task.project.project_code }}</a>
+  </div>
+  <div class="mt-3">
+    <div class="d-flex justify-content-between small fw-bold mb-1"><span>Verified Progress: {{ task.cached_approved_quantity }} / {{ task.assigned_quantity }} {{ task.get_unit_display }}</span><span>{{ completion_pct }}%</span></div>
+    <div class="progress" style="height: 14px;"><div class="progress-bar bg-success" style="width: {{ completion_pct }}%;"></div></div>
+  </div>
+</div>
+<div class="row g-4">
+  <div class="col-lg-8">
+    {% if can_submit %}
+    <div class="card mcm-card p-4 mb-4">
+      <h5 class="fw-bold mb-3"><i class="bi bi-cloud-upload text-primary me-2"></i>Submit Daily Work Progress ({{ task.unit }})</h5>
+      <form method="post" action="{% url 'projects:submit_progress' task.id %}" enctype="multipart/form-data" class="row g-3">{% csrf_token %}
+        <div class="col-md-4"><label class="form-label small fw-semibold">Work Date</label>{{ progress_form.work_date }}</div>
+        <div class="col-md-4"><label class="form-label small fw-semibold">Quantity ({{ task.unit }})</label>{{ progress_form.quantity_submitted }}</div>
+        <div class="col-md-4"><label class="form-label small fw-semibold">Proof Photo (Optional)</label>{{ progress_form.proof_photo }}</div>
+        <div class="col-12"><label class="form-label small fw-semibold">Work Remarks</label>{{ progress_form.remarks }}</div>
+        <div class="col-12"><button type="submit" class="btn btn-primary fw-bold">Submit Progress for Verification</button></div>
+      </form>
+    </div>
+    {% endif %}
+    <div class="card mcm-card p-4 mb-4">
+      <h5 class="fw-bold mb-3">Incremental Progress History ({{ progress_entries|length }})</h5>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light"><tr><th>Date</th><th>Submitted By</th><th>Qty</th><th>Remarks & Photo</th><th>Status</th>{% if manageable %}<th class="text-end">Verify</th>{% endif %}</tr></thead>
+          <tbody>
+          {% for e in progress_entries %}
+          <tr>
+            <td>{{ e.work_date }}</td>
+            <td>{{ e.submitted_by.get_display_name }}</td>
+            <td class="fw-bold">+{{ e.quantity_submitted }} {{ task.unit }}</td>
+            <td><div>{{ e.remarks|default:'-' }}</div>{% if e.proof_photo %}<a href="{{ e.proof_photo.url }}" target="_blank" class="small">View Proof Photo</a>{% endif %}{% if e.review_notes %}<div class="small text-muted">Note: {{ e.review_notes }}</div>{% endif %}</td>
+            <td><span class="badge {% if e.status == 'APPROVED' %}bg-success{% elif e.status == 'REJECTED' %}bg-danger{% else %}bg-warning text-dark{% endif %}">{{ e.get_status_display }}</span></td>
+            {% if manageable %}<td class="text-end">{% if e.status == 'PENDING' %}<form method="post" action="{% url 'projects:review_progress' task.id e.id %}" class="d-inline-flex gap-1">{% csrf_token %}<input type="text" name="review_notes" class="form-control form-control-sm" style="width: 110px;" placeholder="Note"><button name="decision" value="APPROVED" class="btn btn-success btn-sm">Approve</button><button name="decision" value="REJECTED" class="btn btn-danger btn-sm">Reject</button></form>{% else %}<small class="text-muted">Reviewed</small>{% endif %}</td>{% endif %}
+          </tr>
+          {% empty %}<tr><td colspan="6" class="text-center py-3 text-muted">No progress submissions yet.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    {% if manageable %}
+    <div class="card mcm-card p-4 mb-4">
+      <h6 class="fw-bold mb-2">Authorized Quantity Adjustment</h6>
+      <form method="post" action="{% url 'projects:adjust_quantity' task.id %}">{% csrf_token %}
+        <div class="mb-2"><label class="form-label small fw-semibold">New Target ({{ task.unit }})</label>{{ adjustment_form.new_quantity }}</div>
+        <div class="mb-2"><label class="form-label small fw-semibold">Reason</label>{{ adjustment_form.reason }}</div>
+        <button type="submit" class="btn btn-dark btn-sm w-100">Update Target Quantity</button>
+      </form>
+      {% if adjustments %}<hr><ul class="list-unstyled small mb-0">{% for adj in adjustments %}<li class="mb-1"><strong>{{ adj.previous_quantity }} &rarr; {{ adj.new_quantity }}</strong> ({{ adj.reason }})</li>{% endfor %}</ul>{% endif %}
+    </div>
+    {% endif %}
+    <div class="card mcm-card p-4">
+      <h6 class="fw-bold mb-2">Delay Reports ({{ delay_reports|length }})</h6>
+      {% if can_submit %}
+      <form method="post" action="{% url 'projects:report_delay' task.id %}" class="mb-3">{% csrf_token %}
+        <div class="mb-2"><label class="form-label small fw-semibold">Expected Completion</label>{{ delay_form.expected_completion_date }}</div>
+        <div class="mb-2"><label class="form-label small fw-semibold">Delay Reason</label>{{ delay_form.reason }}</div>
+        <button type="submit" class="btn btn-outline-danger btn-sm w-100">Report Task Delay</button>
+      </form>
+      {% endif %}
+      {% for d in delay_reports %}
+      <div class="border rounded p-2 mb-2 small">
+        <div class="fw-semibold">Expected: {{ d.expected_completion_date }}</div>
+        <div class="text-muted">{{ d.reason }}</div>
+        {% if d.is_acknowledged %}<span class="badge bg-success mt-1">Acknowledged</span>{% elif manageable %}<form method="post" action="{% url 'projects:acknowledge_delay' task.id d.id %}" class="mt-1">{% csrf_token %}<button type="submit" class="btn btn-sm btn-outline-dark">Acknowledge</button></form>{% else %}<span class="badge bg-warning text-dark mt-1">Pending Review</span>{% endif %}
+      </div>
+      {% empty %}<p class="text-muted small mb-0">No delays reported.</p>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+﻿{% extends 'base.html' %}
+{% block title %}Construction Projects | CIVYANTRA{% endblock %}
+{% block page_heading %}Construction Projects & Sites{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <form method="get" class="d-flex flex-wrap gap-2">
+    <select name="status" class="form-select" style="width: auto;" onchange="this.form.submit()">
+      <option value="ALL" {% if status_filter == 'ALL' %}selected{% endif %}>All Statuses</option>
+      {% for val, label in status_choices %}<option value="{{ val }}" {% if status_filter == val %}selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+    <input type="text" name="q" value="{{ query }}" class="form-control" style="width: 240px;" placeholder="Search PRJ code, name, location...">
+    <button type="submit" class="btn btn-dark">Search</button>
+  </form>
+  {% if request.user.role == 'ADMIN' %}
+  <a href="{% url 'projects:project_create' %}" class="btn btn-warning fw-bold"><i class="bi bi-plus-circle me-1"></i>+ New Project</a>
+  {% endif %}
+</div>
+<div class="card mcm-card overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-dark"><tr><th>Project Code</th><th>Site Name & Location</th><th>Site Supervisor</th><th>Active Workers</th><th>Start Date</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+      {% for p in projects %}
+      <tr>
+        <td class="fw-bold font-monospace">{{ p.project_code }}</td>
+        <td><div class="fw-semibold">{{ p.name }}</div><small class="text-muted"><i class="bi bi-geo-alt me-1"></i>{{ p.location }}</small></td>
+        <td>{{ p.supervisor.get_display_name }}{% if p.supervisor.supervisor_profile %} <small class="text-muted">({{ p.supervisor.supervisor_profile.supervisor_code }})</small>{% endif %}</td>
+        <td><span class="badge bg-dark">{{ p.active_workers_count }} Workers</span></td>
+        <td>{{ p.start_date }}</td>
+        <td><span class="badge {% if p.status == 'IN_PROGRESS' %}bg-success{% elif p.status == 'PLANNING' %}bg-info text-dark{% elif p.status == 'ON_HOLD' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">{{ p.get_status_display }}</span></td>
+        <td class="text-end">
+          <a href="{% url 'projects:project_detail' p.id %}" class="btn btn-sm btn-primary">Manage Site</a>
+          {% if request.user.role == 'ADMIN' %}<a href="{% url 'projects:project_edit' p.id %}" class="btn btn-sm btn-outline-dark">Edit</a>{% endif %}
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="7" class="text-center py-4 text-muted">No construction projects found.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
