@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% block title %}Supervisor Portfolio & Operations | CIVYANTRA{% endblock %}
+{% block page_heading %}Site Supervisor Portfolio & Work Allocation{% endblock %}
+{% block content %}
+
+<div class="row g-3 mb-3">
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-primary">
+      <small class="text-muted fw-semibold text-uppercase">My Assigned Sites</small>
+      <h3 id="sup-sites" class="fw-bold mb-0 mt-1">{{ projects|length }}</h3>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-info">
+      <small class="text-muted fw-semibold text-uppercase">Workers Under Me</small>
+      <h3 id="sup-workers" class="fw-bold mb-0 mt-1">{{ active_worker_count }}</h3>
+      <small class="text-success fw-semibold mt-1"><span id="sup-present-sub">{{ today_present_count }}</span> Present Today</small>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-warning">
+      <small class="text-muted fw-semibold text-uppercase">Tasks Allocated</small>
+      <h3 class="fw-bold mb-0 mt-1"><span id="sup-tasks-done">{{ completed_tasks_all }}</span> / <span id="sup-tasks-total">{{ total_tasks_all }}</span></h3>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-success">
+      <small class="text-muted fw-semibold text-uppercase">Portfolio Completion</small>
+      <h3 class="fw-bold mb-0 mt-1 text-success"><span id="sup-overall-pct">{{ overall_pct }}</span>%</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-success">
+      <small class="text-muted fw-semibold text-uppercase">Today's Attendance</small>
+      <h4 class="fw-bold mb-0 mt-1"><span id="sup-present">{{ today_present_count }}</span> / {{ active_worker_count }}</h4>
+      <small class="text-muted">Checked in on your sites</small>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-warning">
+      <small class="text-muted fw-semibold text-uppercase">Pending Approvals</small>
+      <h4 id="sup-pending-approvals" class="fw-bold mb-0 mt-1 text-warning">{{ pending_submissions|length }}</h4>
+      <small class="text-muted">Work entries awaiting review</small>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-danger">
+      <small class="text-muted fw-semibold text-uppercase">Open Site Problems</small>
+      <h4 id="sup-problems" class="fw-bold mb-0 mt-1 text-danger">{{ open_problems_count }}</h4>
+      <small class="text-muted">Active issues on your sites</small>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card border-0 shadow-sm rounded-4 p-3 h-100 border-start border-4 border-secondary">
+      <small class="text-muted fw-semibold text-uppercase">Low Stock Alerts</small>
+      <h4 class="fw-bold mb-0 mt-1">{{ low_stock_count }}</h4>
+      <small class="text-muted">Materials at or below reorder</small>
+    </div>
+  </div>
+</div>
+
+{% if open_problems or low_stock_items %}
+<div class="row g-3 mb-4">
+  {% if open_problems %}
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm rounded-4 h-100">
+      <div class="card-header bg-danger text-white rounded-top-4 py-2 px-4 d-flex justify-content-between align-items-center">
+        <span class="fw-bold small"><i class="bi bi-exclamation-triangle-fill me-2"></i>Active Site Problems</span>
+        <span class="badge bg-light text-danger">{{ open_problems_count }} Open</span>
+      </div>
+      <div class="card-body p-3">
+        {% for prb in open_problems %}
+        <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded-3 mb-2">
+          <div>
+            <div class="fw-semibold small">{{ prb.problem_code }} - {{ prb.title }}</div>
+            <small class="text-muted">{{ prb.project.project_code }} | By {{ prb.reported_by.get_display_name }}</small>
+          </div>
+          <span class="badge bg-danger">{{ prb.get_severity_display }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if low_stock_items %}
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm rounded-4 h-100">
+      <div class="card-header bg-dark text-white rounded-top-4 py-2 px-4 d-flex justify-content-between align-items-center">
+        <span class="fw-bold small"><i class="bi bi-box-seam me-2 text-warning"></i>Low Material Stock Alerts</span>
+        <span class="badge bg-warning text-dark">{{ low_stock_count }} Items</span>
+      </div>
+      <div class="card-body p-3">
+        {% for inv in low_stock_items %}
+        <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded-3 mb-2">
+          <div>
+            <div class="fw-semibold small">{{ inv.material.name }}</div>
+            <small class="text-muted">{{ inv.project.project_code }} | Reorder at: {{ inv.reorder_level }} {{ inv.material.unit }}</small>
+          </div>
+          <span class="badge bg-warning text-dark">{{ inv.available_quantity }} {{ inv.material.unit }} left</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+  <div class="card-header bg-dark text-white rounded-top-4 py-3 px-4 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0 fw-bold"><i class="bi bi-briefcase-fill me-2 text-warning"></i>My Supervisor Portfolio (Project-Wise Progress & Allocation)</h6>
+    <span class="badge bg-warning text-dark">Live Sync Active</span>
+  </div>
+  <div class="card-body p-4">
+    {% if portfolio %}
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Project</th>
+            <th>Assigned Workers</th>
+            <th>Tasks Done / Total</th>
+            <th style="width: 22%;">Work Done (%)</th>
+            <th class="text-end">Allocate Work</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in portfolio %}
+          <tr>
+            <td>
+              <a href="{% url 'projects:project_detail' item.project.id %}" class="fw-bold text-decoration-none">{{ item.project.project_code }} - {{ item.project.name }}</a>
+              <small class="text-muted d-block">{{ item.project.location }} | Status: {{ item.project.get_status_display }}</small>
+            </td>
+            <td>
+              <span class="badge bg-info text-dark">{{ item.worker_count }} Active</span>
+              <div class="small text-muted mt-1">
+                {% for a in item.workers %}{{ a.worker.get_display_name }}{% if not forloop.last %}, {% endif %}{% empty %}No workers assigned{% endfor %}
+              </div>
+            </td>
+            <td>
+              <span class="fw-semibold">{{ item.completed_tasks }}</span> / {{ item.total_tasks }}
+              <small class="text-muted d-block">{{ item.pending_tasks }} remaining</small>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="progress flex-grow-1" style="height: 10px;">
+                  <div class="progress-bar bg-success" style="width: {{ item.completion_pct }}%;"></div>
+                </div>
+                <span class="fw-bold small">{{ item.completion_pct }}%</span>
+              </div>
+            </td>
+            <td class="text-end">
+              <a href="{% url 'projects:task_create' item.project.id %}" class="btn btn-primary btn-sm fw-semibold">
+                <i class="bi bi-plus-circle me-1"></i>Give Task to Worker
+              </a>
+              <a href="{% url 'projects:assign_worker' item.project.id %}" class="btn btn-outline-secondary btn-sm mt-1 mt-xl-0">
+                <i class="bi bi-person-plus me-1"></i>Assign Worker
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p class="text-muted mb-0">No construction sites are assigned to your supervisor account yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+  <div class="card-header bg-warning text-dark rounded-top-4 py-3 px-4 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0 fw-bold"><i class="bi bi-clipboard-check me-2"></i>Work Submitted by Workers (Pending Your Approval)</h6>
+    <span class="badge bg-dark text-warning">{{ pending_submissions|length }} Pending</span>
+  </div>
+  <div class="card-body p-4">
+    {% if pending_submissions %}
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Worker</th>
+            <th>Task & Site</th>
+            <th>Quantity Submitted</th>
+            <th>Work Date</th>
+            <th>Remarks</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in pending_submissions %}
+          <tr>
+            <td class="fw-semibold">{{ entry.submitted_by.get_display_name }}</td>
+            <td>
+              <div class="fw-semibold">{{ entry.task.title }}</div>
+              <small class="text-muted">{{ entry.task.project.project_code }}</small>
+            </td>
+            <td><span class="badge bg-primary">{{ entry.quantity_submitted }} {{ entry.task.get_unit_display }}</span></td>
+            <td>{{ entry.work_date }}</td>
+            <td><small class="text-muted">{{ entry.remarks|default:"-" }}</small></td>
+            <td class="text-end">
+              <a href="{% url 'projects:task_detail' entry.task.id %}" class="btn btn-success btn-sm fw-semibold">
+                <i class="bi bi-check2-circle me-1"></i>Review & Approve
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p class="text-muted mb-0">All worker submissions have been reviewed. No pending approvals right now.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+  <div class="card-header bg-white py-3 px-4 d-flex justify-content-between align-items-center border-bottom">
+    <h6 class="mb-0 fw-bold"><i class="bi bi-list-task me-2 text-primary"></i>All Tasks Allocated to Workers</h6>
+    <a href="{% url 'projects:task_list' %}" class="btn btn-outline-primary btn-sm">Full Task Board</a>
+  </div>
+  <div class="card-body p-4">
+    {% if task_rows %}
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Task</th>
+            <th>Assigned Worker</th>
+            <th>Approved / Target</th>
+            <th style="width: 18%;">Completion</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th class="text-end">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in task_rows %}
+          <tr>
+            <td>
+              <div class="fw-semibold">{{ row.task.title }}</div>
+              <small class="text-muted">{{ row.task.project.project_code }} - {{ row.task.project.name }}</small>
+            </td>
+            <td class="fw-semibold">{{ row.task.assigned_to.get_display_name }}</td>
+            <td>{{ row.task.cached_approved_quantity }} / {{ row.task.assigned_quantity }} <small class="text-muted">{{ row.task.unit }}</small></td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="progress flex-grow-1" style="height: 8px;">
+                  <div class="progress-bar bg-primary" style="width: {{ row.pct }}%;"></div>
+                </div>
+                <small class="fw-bold">{{ row.pct }}%</small>
+              </div>
+            </td>
+            <td>{{ row.task.deadline }}</td>
+            <td>
+              <span class="badge {% if row.task.status == 'COMPLETED' %}bg-success{% elif row.task.status == 'DELAYED' %}bg-danger{% elif row.task.status == 'IN_PROGRESS' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                {{ row.task.get_status_display }}
+              </span>
+            </td>
+            <td class="text-end">
+              <a href="{% url 'projects:task_detail' row.task.id %}" class="btn btn-outline-dark btn-sm">Open</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p class="text-muted mb-0">You have not allocated any tasks to workers yet. Click "Give Task to Worker" above to assign work.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  setInterval(function () {
+    fetch("{% url 'core:dashboard_live_stats' %}")
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        if (!data || data.role !== 'SUPERVISOR') return;
+        const setTxt = function (id, val) {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.textContent = val;
+        };
+        setTxt('sup-sites', data.site_count);
+        setTxt('sup-workers', data.active_worker_count);
+        setTxt('sup-present-sub', data.today_present_count);
+        setTxt('sup-present', data.today_present_count);
+        setTxt('sup-tasks-done', data.completed_tasks);
+        setTxt('sup-tasks-total', data.total_tasks);
+        setTxt('sup-overall-pct', data.overall_pct);
+        setTxt('sup-pending-approvals', data.pending_approvals);
+        setTxt('sup-problems', data.open_problems_count);
+      })
+      .catch(function () {});
+  }, 10000);
+</script>
+{% endblock %}

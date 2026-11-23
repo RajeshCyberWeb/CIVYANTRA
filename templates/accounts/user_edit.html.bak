@@ -1,0 +1,23 @@
+﻿{% extends 'base.html' %}
+{% block title %}Edit User | CIVYANTRA{% endblock %}
+{% block page_heading %}Edit Profile: {{ target_user.get_display_name }}{% endblock %}
+{% block content %}
+<div class="card mcm-card p-4" style="max-width: 680px;">
+  <form method="post">{% csrf_token %}
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label fw-semibold">First Name</label>{{ form.first_name }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Last Name</label>{{ form.last_name }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Email</label>{{ form.email }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">Phone Number</label>{{ form.phone_number }}</div>
+      {% if target_user.role == 'SUPERVISOR' %}
+      <div class="col-md-12"><label class="form-label fw-semibold">Department</label>{{ form.department }}</div>
+      {% elif target_user.role == 'WORKER' %}
+      <div class="col-md-6"><label class="form-label fw-semibold">Trade / Skill</label>{{ form.trade_skill }}</div>
+      <div class="col-md-6"><label class="form-label fw-semibold">RFID Card UID (Optional)</label>{{ form.rfid_card_uid }}{% if form.rfid_card_uid.errors %}<div class="text-danger small">{{ form.rfid_card_uid.errors.0 }}</div>{% endif %}</div>
+      {% endif %}
+    </div>
+    <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-dark fw-bold px-4">Save Changes</button><a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}
+

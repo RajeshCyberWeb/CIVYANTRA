@@ -1,0 +1,57 @@
+﻿{% extends 'base.html' %}
+{% block title %}Workforce Management | CIVYANTRA{% endblock %}
+{% block page_heading %}Workforce & User Directory{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <form method="get" class="d-flex flex-wrap gap-2">
+    <select name="role" class="form-select" style="width: auto;" onchange="this.form.submit()">
+      <option value="ALL" {% if role_filter == 'ALL' %}selected{% endif %}>All Roles</option>
+      <option value="SUPERVISOR" {% if role_filter == 'SUPERVISOR' %}selected{% endif %}>Supervisors</option>
+      <option value="WORKER" {% if role_filter == 'WORKER' %}selected{% endif %}>Workers</option>
+      <option value="ADMIN" {% if role_filter == 'ADMIN' %}selected{% endif %}>Admins</option>
+    </select>
+    <input type="text" name="q" value="{{ query }}" class="form-control" style="width: 240px;" placeholder="Search name, username, ID...">
+    <button type="submit" class="btn btn-dark">Search</button>
+  </form>
+  {% if request.user.role == 'ADMIN' %}
+  <div class="d-flex gap-2">
+    <a href="{% url 'accounts:create_supervisor' %}" class="btn btn-primary fw-semibold"><i class="bi bi-person-badge me-1"></i>+ Add Supervisor</a>
+    <a href="{% url 'accounts:create_worker' %}" class="btn btn-warning fw-bold"><i class="bi bi-person-plus me-1"></i>+ Add Worker</a>
+  </div>
+  {% endif %}
+</div>
+<div class="card mcm-card overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-dark"><tr><th>Employee ID</th><th>Name & Username</th><th>Role</th><th>Department / Trade</th><th>Phone</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+      {% for u in users %}
+      <tr>
+        <td class="fw-bold font-monospace">{% if u.worker_profile %}{{ u.worker_profile.worker_code }}{% elif u.supervisor_profile %}{{ u.supervisor_profile.supervisor_code }}{% else %}ADMIN{% endif %}</td>
+        <td><div class="fw-semibold">{{ u.get_display_name }}</div><small class="text-muted">@{{ u.username }}</small></td>
+        <td><span class="badge {% if u.role == 'ADMIN' %}bg-danger{% elif u.role == 'SUPERVISOR' %}bg-primary{% else %}bg-secondary{% endif %}">{{ u.get_role_display }}</span></td>
+        <td>{% if u.worker_profile %}{{ u.worker_profile.trade_skill|default:'General' }}{% elif u.supervisor_profile %}{{ u.supervisor_profile.department|default:'Site Ops' }}{% else %}System Admin{% endif %}</td>
+        <td>{{ u.phone_number|default:'-' }}</td>
+        <td>{% if u.is_active and not u.is_deleted %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-danger">Deactivated</span>{% endif %}</td>
+        <td class="text-end">
+          {% if request.user.role == 'ADMIN' %}
+            <a href="{% url 'accounts:edit_user' u.id %}" class="btn btn-sm btn-outline-dark">Edit</a>
+            {% if u.role == 'WORKER' %}<a href="{% url 'accounts:reset_worker_pin' u.id %}" class="btn btn-sm btn-outline-warning text-dark">Reset PIN</a>{% endif %}
+            {% if u.id != request.user.id %}
+            <form method="post" action="{% url 'accounts:toggle_user_status' u.id %}" class="d-inline">{% csrf_token %}<button type="submit" class="btn btn-sm {% if u.is_active and not u.is_deleted %}btn-outline-secondary{% else %}btn-outline-success{% endif %}">{% if u.is_active and not u.is_deleted %}Deactivate{% else %}Activate{% endif %}</button></form>
+            {% endif %}
+          {% endif %}
+          {% if u.id != request.user.id and u.role != 'ADMIN' %}
+            {% if request.user.role == 'ADMIN' or u.role == 'WORKER' %}
+            <form method="post" action="{% url 'accounts:delete_user' u.id %}" class="d-inline" onsubmit="return confirm('Permanently delete {{ u.get_display_name }}?');">{% csrf_token %}<button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash me-1"></i>Delete</button></form>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="7" class="text-center py-4 text-muted">No users found matching your filter.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

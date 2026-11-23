@@ -1,0 +1,120 @@
+import re
+from django import forms
+from accounts.models import User, WorkerProfile
+
+
+class BaseUserCreateForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. rahul.sharma'}),
+    )
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}),
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}),
+    )
+    email = forms.EmailField(
+        required=False,
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'name@example.com'}),
+    )
+    phone_number = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+91 9876543210'}),
+    )
+    password = forms.CharField(
+        min_length=6,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Minimum 6 characters'}),
+    )
+
+    def clean_username(self):
+        username = self.cleaned_data['username'].strip()
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError('This username is already taken.')
+        return username
+
+
+class SupervisorCreateForm(BaseUserCreateForm):
+    department = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. Civil & Structural'}),
+    )
+
+
+class WorkerCreateForm(BaseUserCreateForm):
+    trade_skill = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. Mason, Electrician, Plumber'}),
+    )
+    attendance_pin = forms.CharField(
+        min_length=4,
+        max_length=4,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'maxlength': '4', 'placeholder': '4-digit Smart Tab PIN'}),
+    )
+    rfid_card_uid = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Optional RFID Card UID'}),
+    )
+
+    def clean_attendance_pin(self):
+        pin = self.cleaned_data['attendance_pin'].strip()
+        if not re.match(r'^\d{4}$', pin):
+            raise forms.ValidationError('Attendance PIN must be exactly 4 numeric digits (0-9).')
+        return pin
+
+    def clean_rfid_card_uid(self):
+        uid = self.cleaned_data.get('rfid_card_uid', '').strip()
+        if uid and WorkerProfile.objects.filter(rfid_card_uid=uid).exists():
+            raise forms.ValidationError('This RFID Card UID is already assigned to another worker.')
+        return uid
+
+
+class UserEditForm(forms.Form):
+    first_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=False, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    phone_number = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    department = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    trade_skill = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    rfid_card_uid = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def __init__(self, *args, user_obj=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user_obj = user_obj
+
+    def clean_rfid_card_uid(self):
+        uid = self.cleaned_data.get('rfid_card_uid', '').strip()
+        if uid and self.user_obj and hasattr(self.user_obj, 'worker_profile'):
+            qs = WorkerProfile.objects.filter(rfid_card_uid=uid).exclude(pk=self.user_obj.worker_profile.pk)
+            if qs.exists():
+                raise forms.ValidationError('This RFID Card UID is already assigned to another worker.')
+        return uid
+
+
+class WorkerPinResetForm(forms.Form):
+    new_pin = forms.CharField(
+        min_length=4,
+        max_length=4,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'maxlength': '4', 'placeholder': 'Enter new 4-digit PIN'}),
+    )
+    confirm_pin = forms.CharField(
+        min_length=4,
+        max_length=4,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'maxlength': '4', 'placeholder': 'Re-enter 4-digit PIN'}),
+    )
+
+    def clean(self):
+        cleaned = super().clean()
+        pin1 = cleaned.get('new_pin', '').strip()
+        pin2 = cleaned.get('confirm_pin', '').strip()
+        if pin1 and not re.match(r'^\d{4}$', pin1):
+            self.add_error('new_pin', 'PIN must be exactly 4 numeric digits.')
+        if pin1 and pin2 and pin1 != pin2:
+            self.add_error('confirm_pin', 'PINs do not match.')
+        return cleaned
