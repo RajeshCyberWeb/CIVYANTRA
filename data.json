@@ -1,0 +1,1517 @@
+[
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$TLBTdr3lkWiWrwGy8Y0SB7$iqUkSjH5Nz8GjMbqglam9repqssjMhCbPWGG2U9n6r0=",
+    "last_login": "2026-11-26T14:30:29.825Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "rajeshrastogi2424@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-11-15T20:21:18.239Z",
+    "role": "ADMIN",
+    "phone_number": "",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": null,
+    "created_at": "2026-11-15T20:21:18.793Z",
+    "updated_at": "2026-11-15T20:21:18.793Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$GLNq0GZFlIcbfahaKjOcWl$9Fek5CJCZzWiIAhwZ9gvXvxWI00lzeI2IOY23KEPnXA=",
+    "last_login": "2026-11-17T17:37:27.839Z",
+    "is_superuser": false,
+    "username": "Rajesh",
+    "first_name": "Mr2",
+    "last_name": ".",
+    "email": "rajeshrastogi24@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-16T11:09:29.699Z",
+    "role": "SUPERVISOR",
+    "phone_number": "9604336990",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-16T11:09:30.331Z",
+    "updated_at": "2026-11-18T05:40:30.836Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$ZsKEhksdobDC3a6BjteIYW$pER7R/SFrX2Qdo7uA+DfBOUubKhKwWYTt5eES1wto2A=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Mr1",
+    "first_name": "Mr1",
+    "last_name": ".",
+    "email": "Mr@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-18T05:37:11.230Z",
+    "role": "SUPERVISOR",
+    "phone_number": "3456789786",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-18T05:37:11.783Z",
+    "updated_at": "2026-11-18T05:37:11.783Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$cFPvgTbGcTnhour8vZmr8E$BABYDAZKHXA/kkJk6+V7J146Qnv5vPZXVv1VY3jjwVI=",
+    "last_login": "2026-11-22T17:10:45.501Z",
+    "is_superuser": false,
+    "username": "mr3",
+    "first_name": "Mr3",
+    "last_name": ".",
+    "email": "mr@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-18T05:43:00.262Z",
+    "role": "WORKER",
+    "phone_number": "5475783444",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-18T05:43:00.824Z",
+    "updated_at": "2026-11-18T05:43:00.824Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$F1iKF9EtZPuU9zv253cgaA$5ccrxr5HlgaFuRrbh+kbM8EHoh47ybc2VVVnPVP0iak=",
+    "last_login": "2026-11-18T05:47:15.324Z",
+    "is_superuser": false,
+    "username": "Mr5",
+    "first_name": "Mr5",
+    "last_name": ".",
+    "email": "Mr5@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-18T05:46:42.879Z",
+    "role": "SUPERVISOR",
+    "phone_number": "568234566",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-18T05:46:43.453Z",
+    "updated_at": "2026-11-18T05:46:43.453Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$LaY8Q6IzmbCTVE9s315OJT$kPdWj/O8QYqk3eidUQE7l9babRlVPjjzKLa7Uo1ddgg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "mr10",
+    "first_name": "mr",
+    "last_name": "10",
+    "email": "mr10@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-19T09:35:49.551Z",
+    "role": "WORKER",
+    "phone_number": "3214569870",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-19T09:35:51.274Z",
+    "updated_at": "2026-11-19T09:35:51.274Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$HSpsZJLXZ1Rjb1c3JDC13y$TT4dUEcfsFXWqBqaoiPjmPMe4UxqkHle5rKrF3iOTUo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "mr11",
+    "first_name": "mr",
+    "last_name": "11",
+    "email": "mr11@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-19T09:36:36.615Z",
+    "role": "WORKER",
+    "phone_number": "1234567890",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-19T09:36:38.507Z",
+    "updated_at": "2026-11-19T09:36:38.507Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$NtrhVUnTkPzDqVwy3jOVir$KvJleZBOaDNoSgPLg2HgQwqZoiI5DN3uI3++5IA/G+w=",
+    "last_login": "2026-11-19T09:40:18.680Z",
+    "is_superuser": false,
+    "username": "Samael",
+    "first_name": "Samael",
+    "last_name": "Starshine",
+    "email": "rajeshrastogi2424@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-19T09:39:50.563Z",
+    "role": "WORKER",
+    "phone_number": "880888088",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_by": [
+      "admin"
+    ],
+    "created_at": "2026-11-19T09:39:52.320Z",
+    "updated_at": "2026-11-19T09:39:52.320Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.supervisorprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "Rajesh"
+    ],
+    "supervisor_code": "SUP-001",
+    "department": "civil",
+    "created_at": "2026-11-16T11:09:30.334Z",
+    "updated_at": "2026-11-18T05:40:30.841Z"
+  }
+},
+{
+  "model": "accounts.supervisorprofile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "Mr1"
+    ],
+    "supervisor_code": "SUP-002",
+    "department": "123456",
+    "created_at": "2026-11-18T05:37:11.787Z",
+    "updated_at": "2026-11-18T05:37:11.787Z"
+  }
+},
+{
+  "model": "accounts.supervisorprofile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "Mr5"
+    ],
+    "supervisor_code": "SUP-003",
+    "department": "Civil",
+    "created_at": "2026-11-18T05:46:43.456Z",
+    "updated_at": "2026-11-18T05:46:43.456Z"
+  }
+},
+{
+  "model": "accounts.workerprofile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "mr3"
+    ],
+    "worker_code": "WRK-001",
+    "trade_skill": "Plumber",
+    "attendance_pin_hash": "pbkdf2_sha256$1000000$yEhpzA9ZMwrYGPPWJhdfgf$tp2dlKnaeVlU0Ru06CXvKduc5xAsjyJbh/KigB/SZX0=",
+    "failed_pin_attempts": 0,
+    "pin_locked_until": null,
+    "pin_updated_at": "2026-11-18T05:43:01.392Z",
+    "rfid_card_uid": null,
+    "biometric_template_id": null,
+    "created_at": "2026-11-18T05:43:01.392Z",
+    "updated_at": "2026-11-18T05:43:01.392Z"
+  }
+},
+{
+  "model": "accounts.workerprofile",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "mr10"
+    ],
+    "worker_code": "WRK-002",
+    "trade_skill": "plumber",
+    "attendance_pin_hash": "pbkdf2_sha256$1000000$2FAGY8wSvE0IqnF4j1Mpel$F/wv3f+vFGycIAfXIAYTAJzo9R3hgUQGBzDcHiOJGNs=",
+    "failed_pin_attempts": 0,
+    "pin_locked_until": null,
+    "pin_updated_at": "2026-11-19T09:35:53.462Z",
+    "rfid_card_uid": null,
+    "biometric_template_id": null,
+    "created_at": "2026-11-19T09:35:53.462Z",
+    "updated_at": "2026-11-19T09:35:53.462Z"
+  }
+},
+{
+  "model": "accounts.workerprofile",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "mr11"
+    ],
+    "worker_code": "WRK-003",
+    "trade_skill": "plumber",
+    "attendance_pin_hash": "pbkdf2_sha256$1000000$vLpojyqpIXtShaNNVsaxL0$ucOni6hF8x8bcCFIcvgaSmQNm3kPpmn0CadIlY6MH8g=",
+    "failed_pin_attempts": 0,
+    "pin_locked_until": null,
+    "pin_updated_at": "2026-11-19T09:36:40.594Z",
+    "rfid_card_uid": null,
+    "biometric_template_id": null,
+    "created_at": "2026-11-19T09:36:40.594Z",
+    "updated_at": "2026-11-19T09:36:40.594Z"
+  }
+},
+{
+  "model": "accounts.workerprofile",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "Samael"
+    ],
+    "worker_code": "WRK-004",
+    "trade_skill": "Plumber",
+    "attendance_pin_hash": "pbkdf2_sha256$1000000$7aliLDSQjaqZXlP1ERmmFz$FYwpkt4Q1lvWR7y7TY+ySoFrwQAtGbHTodUuc4MY/PU=",
+    "failed_pin_attempts": 0,
+    "pin_locked_until": null,
+    "pin_updated_at": "2026-11-19T09:39:54.038Z",
+    "rfid_card_uid": null,
+    "biometric_template_id": null,
+    "created_at": "2026-11-19T09:39:54.038Z",
+    "updated_at": "2026-11-19T09:39:54.038Z"
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 1,
+  "fields": {
+    "project_code": "PRJ-001",
+    "name": "Skyline Tower Phase 1",
+    "location": "Mira Road East, Mumbai",
+    "description": "",
+    "supervisor": [
+      "Rajesh"
+    ],
+    "created_by": [
+      "admin"
+    ],
+    "start_date": "2026-11-19",
+    "expected_end_date": "2026-11-20",
+    "status": "ACTIVE",
+    "working_days_mask": "63",
+    "kiosk_device_name": "",
+    "kiosk_token_hash": "",
+    "kiosk_session_version": 1,
+    "kiosk_is_active": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_at": "2026-11-16T11:26:16.041Z",
+    "updated_at": "2026-11-21T05:37:07.705Z"
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 2,
+  "fields": {
+    "project_code": "PRJ-002",
+    "name": "Skyline Heights Tower A",
+    "location": "Mira Road East, Thane",
+    "description": "Construction of G+12 residential tower including RCC foundation, structural framing, masonry, plumbing, electrical installation, and interior finishing under CIVYANTRA live site tracking.",
+    "supervisor": [
+      "Mr1"
+    ],
+    "created_by": [
+      "admin"
+    ],
+    "start_date": "2026-11-21",
+    "expected_end_date": "2027-06-30",
+    "status": "ACTIVE",
+    "working_days_mask": "63",
+    "kiosk_device_name": "",
+    "kiosk_token_hash": "",
+    "kiosk_session_version": 1,
+    "kiosk_is_active": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_at": "2026-11-21T05:56:33.859Z",
+    "updated_at": "2026-11-21T05:56:33.859Z"
+  }
+},
+{
+  "model": "projects.projectassignment",
+  "pk": 2,
+  "fields": {
+    "project": 2,
+    "worker": [
+      "mr3"
+    ],
+    "assigned_by": [
+      "admin"
+    ],
+    "assigned_date": "2026-11-21",
+    "deactivated_date": null,
+    "is_active": true,
+    "active_slot": 1,
+    "notes": "",
+    "created_at": "2026-11-21T05:58:19.025Z",
+    "updated_at": "2026-11-21T05:58:19.025Z"
+  }
+},
+{
+  "model": "projects.projectassignment",
+  "pk": 3,
+  "fields": {
+    "project": 2,
+    "worker": [
+      "mr11"
+    ],
+    "assigned_by": [
+      "admin"
+    ],
+    "assigned_date": "2026-11-21",
+    "deactivated_date": null,
+    "is_active": true,
+    "active_slot": 1,
+    "notes": "",
+    "created_at": "2026-11-21T05:58:36.596Z",
+    "updated_at": "2026-11-21T05:58:36.596Z"
+  }
+},
+{
+  "model": "projects.task",
+  "pk": 2,
+  "fields": {
+    "project": 2,
+    "assigned_to": [
+      "Samael"
+    ],
+    "assigned_by": [
+      "Mr5"
+    ],
+    "title": "Foundation Concrete Pouring",
+    "description": "Complete foundation concrete work and submit photo proof.",
+    "category": "",
+    "unit": "SQM",
+    "assigned_quantity": "10.00",
+    "cached_approved_quantity": "0.00",
+    "priority": "MEDIUM",
+    "status": "IN_PROGRESS",
+    "deadline": "2026-11-24",
+    "is_deleted": false,
+    "deleted_at": null,
+    "created_at": "2026-11-21T06:13:17.923Z",
+    "updated_at": "2026-11-21T06:13:17.923Z"
+  }
+},
+{
+  "model": "operations.material",
+  "pk": 1,
+  "fields": {
+    "material_code": "MAT-001",
+    "name": "OPC 53 Grade Cement",
+    "category": "Binding",
+    "unit": "Bags",
+    "description": "",
+    "is_active": true,
+    "created_at": "2026-11-16T18:40:20.469Z",
+    "updated_at": "2026-11-16T18:40:20.469Z",
+    "created_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "operations.material",
+  "pk": 2,
+  "fields": {
+    "material_code": "MAT-002",
+    "name": "TMT Steel Bars (12mm)",
+    "category": "Reinforcement",
+    "unit": "Tons",
+    "description": "",
+    "is_active": true,
+    "created_at": "2026-11-16T18:40:20.477Z",
+    "updated_at": "2026-11-16T18:40:20.477Z",
+    "created_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "operations.projectmaterialinventory",
+  "pk": 1,
+  "fields": {
+    "available_quantity": "250.00",
+    "reorder_level": "50.00",
+    "updated_at": "2026-11-16T18:40:20.490Z",
+    "material": 1,
+    "project": 1
+  }
+},
+{
+  "model": "operations.projectmaterialinventory",
+  "pk": 2,
+  "fields": {
+    "available_quantity": "14.50",
+    "reorder_level": "3.00",
+    "updated_at": "2026-11-16T18:40:20.499Z",
+    "material": 2,
+    "project": 1
+  }
+},
+{
+  "model": "operations.siteproblemreport",
+  "pk": 1,
+  "fields": {
+    "problem_code": "PRB-0001",
+    "title": "Tower B Scaffolding Inspection Needed",
+    "severity": "HIGH",
+    "description": "Safety guardrail tightening required on 4th floor east wing before slab pouring.",
+    "photo": "",
+    "status": "RESOLVED",
+    "resolved_at": "2026-11-22T13:22:27.483Z",
+    "resolution_notes": "Resolved on site.",
+    "created_at": "2026-11-16T18:40:20.571Z",
+    "updated_at": "2026-11-22T13:22:27.484Z",
+    "project": 1,
+    "reported_by": [
+      "admin"
+    ],
+    "resolved_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "core.notification",
+  "pk": 1,
+  "fields": {
+    "recipient": [
+      "Rajesh"
+    ],
+    "title": "Assigned to Project PRJ-001",
+    "message": "You have been assigned as Site Supervisor for Skyline Tower Phase 1 (Mira Road East, Mumbai).",
+    "category": "PROJECT",
+    "link_url": "/projects/1/",
+    "is_read": false,
+    "read_at": null,
+    "created_at": "2026-11-16T11:26:16.045Z"
+  }
+},
+{
+  "model": "core.notification",
+  "pk": 4,
+  "fields": {
+    "recipient": [
+      "Mr1"
+    ],
+    "title": "Notification",
+    "message": "You were assigned as Site Supervisor for PRJ-002 (Skyline Heights Tower A).",
+    "category": "GENERAL",
+    "link_url": "",
+    "is_read": false,
+    "read_at": null,
+    "created_at": "2026-11-21T05:56:33.861Z"
+  }
+},
+{
+  "model": "core.notification",
+  "pk": 5,
+  "fields": {
+    "recipient": [
+      "mr3"
+    ],
+    "title": "Notification",
+    "message": "You have been assigned to site PRJ-002 (Skyline Heights Tower A).",
+    "category": "GENERAL",
+    "link_url": "",
+    "is_read": false,
+    "read_at": null,
+    "created_at": "2026-11-21T05:58:19.028Z"
+  }
+},
+{
+  "model": "core.notification",
+  "pk": 6,
+  "fields": {
+    "recipient": [
+      "mr11"
+    ],
+    "title": "Notification",
+    "message": "You have been assigned to site PRJ-002 (Skyline Heights Tower A).",
+    "category": "GENERAL",
+    "link_url": "",
+    "is_read": false,
+    "read_at": null,
+    "created_at": "2026-11-21T05:58:36.597Z"
+  }
+},
+{
+  "model": "core.notification",
+  "pk": 7,
+  "fields": {
+    "recipient": [
+      "admin"
+    ],
+    "title": "Notification",
+    "message": "Site issue PRB-0001 has been marked Resolved.",
+    "category": "GENERAL",
+    "link_url": "",
+    "is_read": false,
+    "read_at": null,
+    "created_at": "2026-11-22T13:22:27.494Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 1,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "User",
+    "target_id": "1",
+    "description": "admin logged in.",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-15T20:26:36.027Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 2,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "User",
+    "target_id": "1",
+    "description": "admin logged in.",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-16T10:58:32.207Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 3,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_SUPERVISOR",
+    "target_model": "User",
+    "target_id": "2",
+    "description": "Created supervisor SUP-001 (Rajesh).",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-16T11:09:30.340Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 4,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "User",
+    "target_id": "3",
+    "description": "Created worker WRK-001 (rahul).",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-16T11:11:58.941Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 5,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_PROJECT",
+    "target_model": "Project",
+    "target_id": "1",
+    "description": "Created project PRJ-001 (Skyline Tower Phase 1).",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-16T11:26:16.051Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 6,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "ASSIGN_WORKER",
+    "target_model": "ProjectAssignment",
+    "target_id": "1",
+    "description": "Assigned rahul to PRJ-001.",
+    "ip_address": "127.0.0.1",
+    "created_at": "2026-11-16T11:26:58.265Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 7,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-16T18:48:49.232Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 8,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-16T18:48:57.889Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 9,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T04:17:31.265Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 10,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "TASK_CREATED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Assigned task \"Ground Flour\" to rahul on PRJ-001",
+    "ip_address": null,
+    "created_at": "2026-11-17T04:19:09.213Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 11,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T04:55:38.544Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 12,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T04:56:06.134Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 13,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T04:56:23.531Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 14,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T05:13:57.385Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 15,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T05:23:17.691Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 16,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T05:23:26.675Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 17,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGIN",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T09:54:42.009Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 18,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:21:20.968Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 19,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:22:20.697Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 20,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:32:35.400Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 21,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:36:58.431Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 22,
+  "fields": {
+    "actor": [
+      "Rajesh"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:37:54.536Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 23,
+  "fields": {
+    "actor": null,
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-17T17:39:51.787Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 24,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "WORKER_UNASSIGNED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Ended assignment of rahul on PRJ-001",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:09:56.029Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 25,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:18:13.026Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 26,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:18:36.917Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 27,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_SUPERVISOR",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:37:11.792Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 28,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "DELETE_USER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:39:36.626Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 29,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "DELETE_USER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:39:40.029Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 30,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "DELETE_USER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:39:52.466Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 31,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "EDIT_USER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:40:30.846Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 32,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:43:01.399Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 33,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:43:07.094Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 34,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:44:20.219Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 35,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_SUPERVISOR",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:46:43.460Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 36,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:47:06.630Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 37,
+  "fields": {
+    "actor": [
+      "Mr5"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-18T05:47:43.323Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 38,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T07:26:04.081Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 39,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:17:23.969Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 40,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:32:22.007Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 41,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:33:50.782Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 42,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:35:53.468Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 43,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:36:40.602Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 44,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "CREATE_WORKER",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:39:54.044Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 45,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:40:03.269Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 46,
+  "fields": {
+    "actor": [
+      "Samael"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:41:32.043Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 47,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-19T09:45:26.148Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 48,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "PROJECT_UPDATED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Updated project PRJ-001",
+    "ip_address": null,
+    "created_at": "2026-11-21T05:37:07.709Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 49,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-21T05:46:06.071Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 50,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "PROJECT_CREATED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Created project PRJ-002 - Skyline Heights Tower A",
+    "ip_address": null,
+    "created_at": "2026-11-21T05:56:33.863Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 51,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "WORKER_ASSIGNED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Assigned mr3 to PRJ-002",
+    "ip_address": null,
+    "created_at": "2026-11-21T05:58:19.029Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 52,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "WORKER_ASSIGNED",
+    "target_model": "",
+    "target_id": "",
+    "description": "Assigned mr11 to PRJ-002",
+    "ip_address": null,
+    "created_at": "2026-11-21T05:58:36.599Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 53,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-21T06:15:28.738Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 54,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-21T06:17:40.873Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 55,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-21T06:17:52.331Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 56,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-22T13:21:45.148Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 57,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-22T14:09:21.773Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 58,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-22T16:08:02.802Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 59,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-22T17:10:33.087Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 60,
+  "fields": {
+    "actor": [
+      "mr3"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-23T03:47:26.620Z"
+  }
+},
+{
+  "model": "core.auditlog",
+  "pk": 61,
+  "fields": {
+    "actor": [
+      "admin"
+    ],
+    "action": "USER_LOGOUT",
+    "target_model": "",
+    "target_id": "",
+    "description": "User",
+    "ip_address": null,
+    "created_at": "2026-11-26T14:30:17.854Z"
+  }
+}
+]
